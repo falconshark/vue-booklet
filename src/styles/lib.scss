@@ -1,0 +1,115 @@
+.vue-booklet{
+  width: 100%;
+  height: 100%;
+  margin: 0.5em;
+  transform-style: preserve-3d;
+}
+
+.book{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: all .8s;
+  background-color: #BCA98A;
+}
+
+.book-control-button{
+  position: absolute;
+  display: flex;
+  top: 50%;
+  color: white;
+  background-color: black;
+  width: 50px;
+  height: 90px;
+  z-index: 999;
+  align-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.prev{
+  left:0;
+}
+
+.next{
+  right:0;
+}
+
+.closed{
+  transform: translateX(-20%);
+}
+
+.opened{
+  transform: translateX(5%);
+}
+
+.cover-before{
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  color: #222;
+  transform-origin: 0 50%;
+  transition: transform .8s;
+  background: none;
+  background-color: white;
+  top: 0;
+  left: 0;
+  border: 0;
+  transform-style: preserve-3d;
+
+  .content{
+    position: absolute;
+    width: 100%;
+    max-width: 100%;
+    padding: 5%;
+    transform-origin: center center;
+    backface-visibility: hidden;
+    overflow: auto;
+    transform-style: preserve-3d;
+  }
+}
+
+.page{
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  color: #222;
+  background-color: white;
+  top: 0;
+  right: 0;
+  transform-origin: 0 50%;
+  transition: transform .8s;
+  border: 1px solid #ddd;
+  background: linear-gradient(to right, #d9d9d9 0%,#f9f9f9 3%,#ffffff 8%,#ffffff 100%);
+  transform-style: preserve-3d;
+
+  .content{
+    position: absolute;
+    width: 100%;
+    max-width: 100%;
+    padding: 5%;
+    transform-origin: center center;
+    backface-visibility: hidden;
+    overflow: auto;
+    transform-style: preserve-3d;
+  }
+
+  .content:nth-child(1){
+    z-index: 2;
+  }
+
+  .content:nth-child(2){
+    transform: rotateY(180deg);
+    z-index: 3;
+  }
+}
+
+.cover{
+  background: none;
+  background-color: #BCA98A;
+}
+
+.fliped{
+  transform: rotateY(-180deg);
+}

@@ -1,0 +1,14 @@
+
+// Import your library's styles
+@import 'lib';
+
+html, body{
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#app{
+  width: 90%;
+  height: 100%;
+}
