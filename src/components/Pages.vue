@@ -32,8 +32,8 @@ export default {
   methods: {
     flip(e) {
       if (this.clickable) {
-        this.clickable = false;
         if (e.target.classList.contains('page')) {
+          this.clickable = false;
           const clickedPage = e.target;
           // If user click on cover and book not opened
           if (clickedPage.classList.contains('cover') && !this.opened) {
