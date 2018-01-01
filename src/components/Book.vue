@@ -2,15 +2,17 @@
   <div class="vue-booklet">
     <div class="book closed" ref="book">
       <div class="cover-before" />
-        <div class="book-control-button prev" v-show="!front" v-on:click="prevPage">
-          Prev Page
-        </div>
-        <div class="book-control-button next" v-show="!back" v-on:click="nextPage">
-          Next Page
-        </div>
       <Pages :opened="opened">
         <slot></slot>
       </Pages>
+    </div>
+    <div class="book-control-buttons">
+      <div role="button" tabindex="0" class="book-control-button prev" v-show="!front"  v-on:keyup.enter="prevPage" v-on:click="prevPage">
+        Prev
+      </div>
+      <div role="button" tabindex="0" class="book-control-button next" v-show="!back"  v-on:keyup.enter="nextPage" v-on:click="nextPage">
+        Next
+      </div>
     </div>
   </div>
 </template>
@@ -34,6 +36,7 @@ export default {
     // Book opened event
     this.$on('onOpened', () => {
       const book = this.$refs.book;
+      const content = book.querySelector('.content');
       this.opened = true;
       book.classList.add('opened');
       book.classList.remove('closed');
