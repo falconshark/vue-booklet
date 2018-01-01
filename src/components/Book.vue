@@ -116,7 +116,10 @@ export default {
           return true;
         }
       }else{
-        if(page.nextElementSibling){
+        if(this.back){
+          return true;
+        }
+        if(page.nextElementSibling && !this.back){
           return true;
         }
       }

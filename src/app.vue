@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import Book from './components/Book.vue'
+import Book from './components/book.vue'
 
 export default {
   name: 'app',
