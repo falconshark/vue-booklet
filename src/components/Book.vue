@@ -38,18 +38,13 @@ export default {
     // Book opened event
     this.$on('onOpened', () => {
       const book = this.$refs.book;
-      const content = book.querySelector('.content');
       this.opened = true;
       book.classList.add('opened');
       book.classList.remove('closed');
     });
 
     // Book page fliped event
-    this.$on('onFlipStart', (direction) => {
-      const currentPage = document.getElementsByClassName('currentPage')[0];
-    });
-
-    this.$on('onFlipEnd', (direction) => {
+    this.$on('onFlip', () => {
       const currentPage = document.getElementsByClassName('currentPage')[0];
 
       if (currentPage.classList.contains('firstPage') && !currentPage.classList.contains('fliped')){
@@ -83,7 +78,6 @@ export default {
       }
 
       currentPage.classList.add('fliped');
-      this.$emit('onFlipStart', currentPage, 'next');
 
       setTimeout(() => {
         // If this page have next page, set it to current page
@@ -94,14 +88,12 @@ export default {
           currentPage.nextElementSibling.classList.add('currentPage');
         }
 
-        this.$emit('onFlipEnd', currentPage, 'back');
+        this.$emit('onFlip');
       }, 200);
     },
     prevPage() {
       const currentPage = document.getElementsByClassName('currentPage')[0];
       const prevPage = currentPage.previousElementSibling;
-
-      this.$emit('onFlipStart', currentPage, 'back');
 
       // If user click on cover and book not opened
       if (prevPage) {
@@ -121,7 +113,7 @@ export default {
          }
       }
 
-      this.$emit('onFlipEnd', currentPage, 'back');
+      this.$emit('onFlip');
     },
   },
 };

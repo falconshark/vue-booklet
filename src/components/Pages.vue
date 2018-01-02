@@ -10,19 +10,13 @@ export default {
   mounted() {
     // Init page index
     const pages = document.getElementsByClassName('page');
-    for (let i = 0; i < pages.length; i += 1) {
-      const page = pages[i];
-      const lastPage = pages[pages.length - 1];
-      // If is cover, Set index to top
-      if (page.classList.contains('cover')) {
-        page.classList.add('firstPage');
-        page.classList.add('currentPage');
-        page.style.zIndex = '2';
-      } else {
-        page.style.zIndex = '1';
-      }
-      lastPage.classList.add('lastPage');
-    }
+    const firstPage = pages[0];
+    const lastPage = pages[pages.length - 1];
+
+    firstPage.classList.add('firstPage');
+    firstPage.classList.add('currentPage');
+    firstPage.style.zIndex = '2';
+    lastPage.classList.add('lastPage');
   },
   props: {
     opened: false,
@@ -41,8 +35,6 @@ export default {
           const currentPage = document.getElementsByClassName('currentPage')[0];
           currentPage.classList.remove('currentPage');
           clickedPage.classList.add('currentPage');
-
-          this.$parent.$emit('onFlipStart', clickedPage, 'next');
 
           // If user click on cover and book not opened
           if (clickedPage.classList.contains('cover') && !this.opened) {
@@ -69,12 +61,11 @@ export default {
             //Set timeout to avoid user click too fast
             setTimeout(() => {
               this.clickable = true;
-              this.$parent.$emit('onFlipEnd', clickedPage, 'back');
+              this.$parent.$emit('onFlip');
             }, 400);
 
           } else {
             // Undo fliped
-            this.$parent.$emit('onFlipStart', clickedPage, 'back');
             clickedPage.classList.remove('fliped');
 
             setTimeout(() => {
@@ -87,7 +78,7 @@ export default {
             }, 200);
 
             setTimeout(() => {
-              this.$parent.$emit('onFlipEnd', clickedPage, 'back');
+              this.$parent.$emit('onFlip');
               this.clickable = true;
             }, 400);
           }

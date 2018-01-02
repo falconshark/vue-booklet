@@ -95,6 +95,7 @@
   border: 1px solid #ddd;
   background: linear-gradient(to right, #d9d9d9 0%,#f9f9f9 3%,#ffffff 8%,#ffffff 100%);
   transform-style: preserve-3d;
+  z-index: -1;
 
   .content{
     position: absolute;
