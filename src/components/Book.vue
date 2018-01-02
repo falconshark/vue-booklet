@@ -97,15 +97,16 @@ export default {
         if (page.previousElementSibling.classList.contains('cover') && this.opened) {
           this.$emit('onClosed');
         }
-        // If book is not on back
-        if (!this.back) {
+
+        // If last page fliped, undo flip only
+        if(page.classList.contains('lastPage') && page.classList.contains('fliped')){
+          page.classList.remove('fliped');
+        }else{
           page.style.zIndex = '1';
           page.classList.remove('currentPage');
           page.previousElementSibling.style.zIndex = '2';
           page.previousElementSibling.classList.add('currentPage');
           page.previousElementSibling.classList.remove('fliped');
-        } else {
-          page.classList.remove('fliped');
         }
       }
     },

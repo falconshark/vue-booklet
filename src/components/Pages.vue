@@ -12,13 +12,16 @@ export default {
     const pages = document.getElementsByClassName('page');
     for (let i = 0; i < pages.length; i += 1) {
       const page = pages[i];
+      const lastPage = pages[pages.length - 1];
       // If is cover, Set index to top
       if (page.classList.contains('cover')) {
+        page.classList.add('firstPage');
         page.classList.add('currentPage');
         page.style.zIndex = '2';
       } else {
         page.style.zIndex = '1';
       }
+      lastPage.classList.add('lastPage');
     }
   },
   props: {

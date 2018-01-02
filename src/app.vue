@@ -4,9 +4,6 @@
       <div class="page cover">
         <article class="content">
           <h1>My First Book</h1>
-          <div class="image">
-            <img class="img-fluid cover-image" src="./assets/sheep-round-cartoon-face-lamb-97168718.jpg" />
-          </div>
         </article>
       </div>
       <div class="page">
