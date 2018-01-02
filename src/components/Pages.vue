@@ -38,6 +38,10 @@ export default {
         if (e.target.classList.contains('page')) {
           this.clickable = false;
           const clickedPage = e.target;
+          const currentPage = document.getElementsByClassName('currentPage')[0];
+          currentPage.classList.remove('currentPage');
+          clickedPage.classList.add('currentPage');
+
           this.$parent.$emit('onFlipStart', clickedPage, 'next');
 
           // If user click on cover and book not opened
@@ -57,10 +61,7 @@ export default {
             //Set timeout to avoid flip animation broken
             setTimeout(() => {
               clickedPage.style.zIndex = '1';
-
               if (clickedPage.nextElementSibling) {
-                clickedPage.classList.remove('currentPage');
-                clickedPage.nextElementSibling.classList.add('currentPage');
                 clickedPage.nextElementSibling.style.zIndex = '2';
               }
             }, 200);
@@ -79,13 +80,9 @@ export default {
             setTimeout(() => {
               this.clickable = true;
               clickedPage.style.zIndex = '2';
+
               if (clickedPage.nextElementSibling) {
                 clickedPage.nextElementSibling.style.zIndex = '1';
-              }
-
-              if (clickedPage.previousElementSibling) {
-                clickedPage.classList.remove('currentPage');
-                clickedPage.previousElementSibling.classList.add('currentPage');
               }
             }, 200);
 
