@@ -43,18 +43,19 @@ export default {
     });
 
     // Book page fliped event
-    this.$on('onFlip', (page, direction) => {
-      const content = page.querySelector('.content');
-      if (this.checkHavePrev(page, content)) {
-        this.front = false;
-      } else {
+    this.$on('onFlip', (direction) => {
+      const currentPage = document.getElementsByClassName('currentPage')[0];
+
+      if (currentPage.classList.contains('firstPage') && !currentPage.classList.contains('fliped')){
         this.front = true;
+      } else {
+        this.front = false;
       }
 
-      if (this.checkHaveNext(page, content)) {
-        this.back = false;
-      } else {
+      if (currentPage.classList.contains('lastPage') && currentPage.classList.contains('fliped')) {
         this.back = true;
+      } else {
+        this.back = false;
       }
     });
 
@@ -89,55 +90,28 @@ export default {
       }, 200);
     },
     prevPage() {
-      const page = document.getElementsByClassName('currentPage')[0];
-      this.$emit('onFlip', page, 'prev');
+      const currentPage = document.getElementsByClassName('currentPage')[0];
+      const prevPage = currentPage.previousElementSibling;
+
+      this.$emit('onFlip', currentPage, 'back');
 
       // If user click on cover and book not opened
-      if (page.previousElementSibling) {
-        if (page.previousElementSibling.classList.contains('cover') && this.opened) {
+      if (prevPage) {
+        if (prevPage.classList.contains('firstPage') && this.opened) {
           this.$emit('onClosed');
         }
 
         // If last page fliped, undo flip only
-        if(page.classList.contains('lastPage') && page.classList.contains('fliped')){
-          page.classList.remove('fliped');
+        if(currentPage.classList.contains('lastPage') && currentPage.classList.contains('fliped')){
+          currentPage.classList.remove('fliped');
         }else{
-          page.style.zIndex = '1';
-          page.classList.remove('currentPage');
-          page.previousElementSibling.style.zIndex = '2';
-          page.previousElementSibling.classList.add('currentPage');
-          page.previousElementSibling.classList.remove('fliped');
-        }
+          currentPage.style.zIndex = '1';
+          currentPage.classList.remove('currentPage');
+          prevPage.style.zIndex = '2';
+          prevPage.classList.remove('fliped');
+          prevPage.classList.add('currentPage');
+         }
       }
-    },
-    // Check this page had next page
-    checkHaveNext(page, content) {
-      if(!page.classList.contains('fliped')){
-        if(page.nextElementSibling || content.nextElementSibling){
-          return true;
-        }
-      }else{
-        if(this.back){
-          return true;
-        }
-        if(page.nextElementSibling && !this.back){
-          return true;
-        }
-      }
-
-      return false;
-    },
-    // Check this page had previous page
-    checkHavePrev(page, content) {
-      if (page.classList.contains('cover') && this.opened === true) {
-        return true;
-      }
-
-      if (page.previousElementSibling || content.previousElementSibling) {
-        return true;
-      }
-
-      return false;
     },
   },
 };

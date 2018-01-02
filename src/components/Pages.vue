@@ -52,16 +52,20 @@ export default {
           if (!clickedPage.classList.contains('fliped')) {
             clickedPage.classList.add('fliped');
 
-            this.$parent.$emit('onFlip', clickedPage, 'next');
-
             //Set timeout to avoid flip animation broken
             setTimeout(() => {
               clickedPage.style.zIndex = '1';
+              clickedPage.classList.add('currentPage');
+
+              if(clickedPage.previousElementSibling){
+                clickedPage.previousElementSibling.classList.remove('currentPage');
+              }
+
               if (clickedPage.nextElementSibling) {
-                clickedPage.classList.remove('currentPage');
-                clickedPage.nextElementSibling.classList.add('currentPage');
                 clickedPage.nextElementSibling.style.zIndex = '2';
               }
+              
+              this.$parent.$emit('onFlip', clickedPage, 'next');
             }, 200);
 
             //Set timeout to avoid user click too fast
@@ -71,8 +75,6 @@ export default {
 
           } else {
             // Undo fliped
-            this.$parent.$emit('onFlip', clickedPage, 'back');
-
             clickedPage.classList.remove('fliped');
 
             setTimeout(() => {
@@ -86,6 +88,8 @@ export default {
                 clickedPage.classList.remove('currentPage');
                 clickedPage.previousElementSibling.classList.add('currentPage');
               }
+
+              this.$parent.$emit('onFlip', clickedPage, 'back');
             }, 200);
 
             setTimeout(() => {
