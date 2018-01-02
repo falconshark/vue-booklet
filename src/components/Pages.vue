@@ -38,6 +38,8 @@ export default {
         if (e.target.classList.contains('page')) {
           this.clickable = false;
           const clickedPage = e.target;
+          this.$parent.$emit('onFlipStart', clickedPage, 'next');
+
           // If user click on cover and book not opened
           if (clickedPage.classList.contains('cover') && !this.opened) {
             this.$parent.$emit('onOpened');
@@ -55,26 +57,23 @@ export default {
             //Set timeout to avoid flip animation broken
             setTimeout(() => {
               clickedPage.style.zIndex = '1';
-              clickedPage.classList.add('currentPage');
-
-              if(clickedPage.previousElementSibling){
-                clickedPage.previousElementSibling.classList.remove('currentPage');
-              }
 
               if (clickedPage.nextElementSibling) {
+                clickedPage.classList.remove('currentPage');
+                clickedPage.nextElementSibling.classList.add('currentPage');
                 clickedPage.nextElementSibling.style.zIndex = '2';
               }
-              
-              this.$parent.$emit('onFlip', clickedPage, 'next');
             }, 200);
 
             //Set timeout to avoid user click too fast
             setTimeout(() => {
               this.clickable = true;
+              this.$parent.$emit('onFlipEnd', clickedPage, 'back');
             }, 400);
 
           } else {
             // Undo fliped
+            this.$parent.$emit('onFlipStart', clickedPage, 'back');
             clickedPage.classList.remove('fliped');
 
             setTimeout(() => {
@@ -88,11 +87,10 @@ export default {
                 clickedPage.classList.remove('currentPage');
                 clickedPage.previousElementSibling.classList.add('currentPage');
               }
-
-              this.$parent.$emit('onFlip', clickedPage, 'back');
             }, 200);
 
             setTimeout(() => {
+              this.$parent.$emit('onFlipEnd', clickedPage, 'back');
               this.clickable = true;
             }, 400);
           }
