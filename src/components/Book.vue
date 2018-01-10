@@ -93,8 +93,8 @@ export default {
           page.classList.add('odd');
         }
       }
-      firstPage.style.zIndex = '3';
       firstPage.nextElementSibling.style.zIndex = '2';
+      firstPage.style.zIndex = '3';
       lastPage.classList.add('lastPage');
     },
     nextPage() {
