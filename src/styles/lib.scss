@@ -81,10 +81,6 @@
     width: 100%;
     max-width: 100%;
     padding: 5%;
-    transition: opacity ease-in 0.25s;
-    -webkit-transition: opacity ease-in 0.25s;
-    -moz-transition: opacity ease-in 0.25s;
-    -o-transition: opacity ease-in 0.25s;
     transform-origin: center center;
     backface-visibility: hidden;
     overflow: auto;
@@ -145,4 +141,32 @@
 .fliped{
   -webkit-transform: rotateY(-180deg) translateZ(1px);
   transform: rotateY(-180deg) translateZ(1px);
+}
+
+@media (max-width: 768px) {
+  .book-control-buttons{
+    display: none;
+  }
+
+  .book{
+    background: none;
+    -webkit-transform: none;
+    transform: none;
+  }
+
+  .cover-before{
+    display: none;
+  }
+
+  .page{
+    position: static;
+    width: 100%;
+    display: block;
+    background: none;
+    margin-top: 0.5em;
+  }
+
+  .cover{
+    background-color: #BCA98A;
+  }
 }
