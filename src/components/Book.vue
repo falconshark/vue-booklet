@@ -2,7 +2,7 @@
   <div class="vue-booklet">
     <div class="book closed" ref="book">
       <div class="cover-before" />
-      <Pages :opened="opened">
+      <Pages :opened="opened" :initPage="initPage">
         <slot></slot>
       </Pages>
     </div>
@@ -32,19 +32,25 @@ export default {
       opened: false,
       front: true,
       back: false,
+      clickable: true,
     };
   },
   mounted() {
+    const book = this.$refs.book;
+
     // Book opened event
     this.$on('onOpened', () => {
-      const book = this.$refs.book;
       this.opened = true;
       book.classList.add('opened');
       book.classList.remove('closed');
     });
 
     // Book page fliped event
-    this.$on('onFlip', () => {
+    this.$on('onFlipStart', (direction) => {
+      const currentPage = document.getElementsByClassName('currentPage')[0];
+    });
+
+    this.$on('onFlipEnd', (direction) => {
       const currentPage = document.getElementsByClassName('currentPage')[0];
 
       if (currentPage.classList.contains('firstPage') && !currentPage.classList.contains('fliped')){
@@ -64,62 +70,96 @@ export default {
     this.$on('onClosed', () => {
       const book = this.$refs.book;
       this.opened = false;
+      this.initPage();
       book.classList.add('closed');
       book.classList.remove('opened');
     });
   },
   methods: {
+    initPage(){
+      const pages = document.getElementsByClassName('page');
+      const firstPage = pages[0];
+      const lastPage = pages[pages.length - 1];
+
+      firstPage.classList.add('firstPage');
+      firstPage.classList.add('currentPage');
+
+      for(let i = 0; i < pages.length; i++){
+        const index = i + 1;
+        const page = pages[i];
+        if(index % 2 === 0){
+          page.classList.add('oven');
+        }else{
+          page.classList.add('odd');
+        }
+      }
+      firstPage.style.zIndex = '3';
+      firstPage.nextElementSibling.style.zIndex = '2';
+      lastPage.classList.add('lastPage');
+    },
     nextPage() {
       const currentPage = document.getElementsByClassName('currentPage')[0];
 
-      // If user click on cover and book not opened
-      if (currentPage.classList.contains('cover') && !this.opened) {
-        this.$emit('onOpened');
-      }
-
-      currentPage.classList.add('fliped');
-
-      setTimeout(() => {
-        // If this page have next page, set it to current page
-        if (currentPage.nextElementSibling) {
-          currentPage.style.zIndex = '1';
-          currentPage.classList.remove('currentPage');
-          currentPage.nextElementSibling.style.zIndex = '2';
-          currentPage.nextElementSibling.classList.add('currentPage');
+      if(this.clickable){
+        this.clickable = false;
+        // If user click on cover and book not opened
+        if (currentPage.classList.contains('cover') && !this.opened) {
+          this.$emit('onOpened');
         }
 
-        this.$emit('onFlip');
-      }, 200);
+        currentPage.classList.add('fliped');
+        this.$emit('onFlipStart', 'next');
+
+        // If this page have next page, set it to current page
+
+        setTimeout(() => {
+          if (currentPage.nextElementSibling) {
+            currentPage.removeAttribute('style');
+            currentPage.classList.remove('currentPage');
+            currentPage.nextElementSibling.style.zIndex = '3';
+            currentPage.nextElementSibling.classList.add('currentPage');
+          }
+        }, 400);
+
+        setTimeout(() => {
+          this.clickable = true;
+          this.$emit('onFlipEnd', 'next');
+        }, 400);
+      }
     },
     prevPage() {
       const currentPage = document.getElementsByClassName('currentPage')[0];
       const prevPage = currentPage.previousElementSibling;
 
-      // If user click on cover and book not opened
-      if (prevPage) {
-        if (prevPage.classList.contains('firstPage') && this.opened) {
-          this.$emit('onClosed');
+      if(this.clickable){
+        this.clickable = false;
+        this.$emit('onFlipStart', 'back');
+
+        // If user click on cover and book not opened
+        if (prevPage) {
+          // If last page fliped, undo flip only
+          if(currentPage.classList.contains('lastPage') && currentPage.classList.contains('fliped')){
+            currentPage.classList.remove('fliped');
+          }else{
+            currentPage.removeAttribute('style');
+            currentPage.classList.remove('currentPage');
+            prevPage.style.zIndex = '3';
+            prevPage.classList.remove('fliped');
+            prevPage.classList.add('currentPage');
+           }
+
+           if (prevPage.classList.contains('firstPage') && this.opened) {
+             this.$emit('onClosed');
+             currentPage.style.zIndex = '2';
+           }
         }
 
-        // If last page fliped, undo flip only
-        if(currentPage.classList.contains('lastPage') && currentPage.classList.contains('fliped')){
-          currentPage.classList.remove('fliped');
-        }else{
-          currentPage.style.zIndex = '1';
-          currentPage.classList.remove('currentPage');
-          prevPage.style.zIndex = '2';
-          prevPage.classList.remove('fliped');
-          prevPage.classList.add('currentPage');
-         }
+        setTimeout(() => {
+          this.clickable = true;
+          this.$emit('onFlipEnd', 'back');
+        }, 400);
       }
-
-      this.$emit('onFlip');
     },
   },
 };
 </script>
-<style lang="scss" scoped>
-*{
-  box-sizing: border-box;
-}
-</style>

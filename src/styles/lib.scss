@@ -45,7 +45,7 @@
 }
 
 .closed{
-  transform: translateX(-14.8vw);
+  transform: translateX(-25%);
 }
 
 .opened{
@@ -116,6 +116,11 @@
     transform: rotateY(180deg);
     z-index: 3;
   }
+}
+
+.pages{
+  position: relative;
+  height: 100%;
 }
 
 .cover{
