@@ -119,9 +119,6 @@ export default {
             currentPage.nextElementSibling.style.zIndex = '3';
             currentPage.nextElementSibling.classList.add('currentPage');
           }
-        }, 400);
-
-        setTimeout(() => {
           this.clickable = true;
           this.$emit('onFlipEnd', 'next');
         }, 400);
