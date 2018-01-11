@@ -72,9 +72,11 @@ export default {
     this.$on('onFlipStart', (direction) => {
       const currentPage = document.getElementsByClassName('currentPage')[0];
       const hiddenPages = this.getAllNextPage(currentPage);
-      hiddenPages.forEach((page) => {
-        page.style.zIndex = '-1';
-      });
+      if(!currentPage.classList.contains('firstPage')){
+        hiddenPages.forEach((page) => {
+          page.style.zIndex = '-1';
+        });
+      }
       this.onFlipStart(currentPage, direction);
     });
 
@@ -129,6 +131,7 @@ export default {
         }
       }
       firstPage.style.zIndex = '3';
+      firstPage.nextElementSibling.style.zIndex = '2';
       lastPage.classList.add('lastPage');
     },
     nextPage() {
