@@ -35,6 +35,28 @@ export default {
       clickable: true,
     };
   },
+  props: {
+    pageTransitionTime: {
+      type: Number,
+      default: 0.8,
+    },
+    onOpened:{
+      type: Function,
+      default: () => {},
+    },
+    onFlipStart: {
+      type: Function,
+      default: () => {},
+    },
+    onFlipEnd: {
+      type: Function,
+      default: () => {},
+    },
+    onClosed: {
+      type: Function,
+      default: () => {},
+    }
+  },
   mounted() {
     const book = this.$refs.book;
 
@@ -43,6 +65,7 @@ export default {
       this.opened = true;
       book.classList.add('opened');
       book.classList.remove('closed');
+      this.onOpened(book);
     });
 
     // Book page fliped event
@@ -52,6 +75,7 @@ export default {
       hiddenPages.forEach((page) => {
         page.style.zIndex = '-1';
       });
+      this.onFlipStart(currentPage, direction);
     });
 
     this.$on('onFlipEnd', (direction) => {
@@ -68,6 +92,8 @@ export default {
       } else {
         this.back = false;
       }
+
+      this.onFlipEnd(currentPage, direction);
     });
 
     // Book closed event
@@ -77,6 +103,8 @@ export default {
       this.initPage();
       book.classList.add('closed');
       book.classList.remove('opened');
+
+      this.onClosed(book);
     });
   },
   methods: {
@@ -84,6 +112,7 @@ export default {
       const pages = document.getElementsByClassName('page');
       const firstPage = pages[0];
       const lastPage = pages[pages.length - 1];
+      const pageTransitionTime = this.pageTransitionTime;
 
       firstPage.classList.add('firstPage');
       firstPage.classList.add('currentPage');
@@ -92,6 +121,7 @@ export default {
         const index = i + 1;
         const page = pages[i];
         page.style.zIndex = '-1';
+        page.style.transition = 'transform ' + pageTransitionTime + 's';
         if(index % 2 === 0){
           page.classList.add('oven');
         }else{
