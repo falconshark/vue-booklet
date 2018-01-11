@@ -41,23 +41,17 @@
   }
 
   .book-control-button{
-    display: inline-flex;
     width: 75px;
-    height: 30px;
-    z-index: 999;
+    height: 40px;
+    border: 0;
     border-radius: 2px;
     color: #ffffff;
     background-color: #72B890;
-    border-color: #72B890;
     font-size: 16px;
     transition: all 0.3s;
-    align-content: center;
-    align-items: center;
-    text-align: center;
     margin-top: 1em;
     margin-bottom: 1em;
     margin-right: 1em;
-    padding: 1.5em;
 
     &:hover, &:focus{
       color: #ffffff;
