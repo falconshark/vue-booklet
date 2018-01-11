@@ -48,6 +48,10 @@ export default {
     // Book page fliped event
     this.$on('onFlipStart', (direction) => {
       const currentPage = document.getElementsByClassName('currentPage')[0];
+      const hiddenPages = this.getAllNextPage(currentPage);
+      hiddenPages.forEach((page) => {
+        page.style.zIndex = '-1';
+      });
     });
 
     this.$on('onFlipEnd', (direction) => {
@@ -94,35 +98,35 @@ export default {
           page.classList.add('odd');
         }
       }
-      firstPage.nextElementSibling.style.zIndex = '2';
       firstPage.style.zIndex = '3';
+      firstPage.nextElementSibling.style.zIndex = '2';
       lastPage.classList.add('lastPage');
     },
     nextPage() {
       const currentPage = document.getElementsByClassName('currentPage')[0];
+      const nextPage = currentPage.nextElementSibling;
 
       if(this.clickable){
         this.clickable = false;
         // If user click on cover and book not opened
-        if (currentPage.classList.contains('cover') && !this.opened) {
+        if (currentPage.classList.contains('firstPage') && !this.opened) {
           this.$emit('onOpened');
         }
 
         currentPage.classList.add('fliped');
         this.$emit('onFlipStart', 'next');
 
-        // If this page have next page, set it to current page
-
         setTimeout(() => {
-          if (currentPage.nextElementSibling) {
+          // If this page have next page, set it to current page
+          if (nextPage) {
+            nextPage.style.zIndex = '3';
             currentPage.removeAttribute('style');
             currentPage.classList.remove('currentPage');
-            currentPage.nextElementSibling.style.zIndex = '3';
-            currentPage.nextElementSibling.classList.add('currentPage');
+            nextPage.classList.add('currentPage');
           }
           this.clickable = true;
           this.$emit('onFlipEnd', 'next');
-        }, 400);
+        }, 200);
       }
     },
     prevPage() {
@@ -155,8 +159,17 @@ export default {
         setTimeout(() => {
           this.clickable = true;
           this.$emit('onFlipEnd', 'back');
-        }, 400);
+        }, 200);
       }
+    },
+    getAllNextPage(currentPage){
+      const pages = [];
+      let nextPage = currentPage.nextElementSibling;
+      while (nextPage) {
+        pages.push(nextPage);
+        nextPage = nextPage.nextElementSibling;
+      }
+      return pages;
     },
   },
 };
