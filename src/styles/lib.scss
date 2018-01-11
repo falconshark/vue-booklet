@@ -137,6 +137,12 @@
       -moz-transform-style: preserve-3d;
       transform-style: preserve-3d;
 
+      &:nth-child(1){
+        -webkit-transform: translateZ(1px);
+        -moz-transform: translateZ(1px);
+        transform: translateZ(1px);
+      }
+
       &:nth-child(2){
         -webkit-transform: rotateY(180deg) translateZ(1px);
         -moz-transform: rotateY(180deg) translateZ(1px);

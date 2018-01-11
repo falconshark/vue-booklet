@@ -87,6 +87,7 @@ export default {
       for(let i = 0; i < pages.length; i++){
         const index = i + 1;
         const page = pages[i];
+        page.style.zIndex = '-1';
         if(index % 2 === 0){
           page.classList.add('oven');
         }else{

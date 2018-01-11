@@ -17,15 +17,14 @@ html, body{
 }
 
 .cover{
+  text-align: center;
+
   h1{
-    text-align: center;
     margin-bottom: 1em;
   }
 
-  .image{
-    text-align: center;
-
-    .cover-image{
+  @media (min-width: 768px) {
+    img{
       max-width: 300px;
     }
   }

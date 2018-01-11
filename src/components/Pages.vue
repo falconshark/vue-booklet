@@ -21,7 +21,7 @@ export default {
       const contents = document.getElementsByClassName('content');
       for(let i = 0; i < contents.length; i++){
         const content = contents[i];
-        //const ps = new PerfectScrollbar(content);
+        const ps = new PerfectScrollbar(content);
       }
     },
   }

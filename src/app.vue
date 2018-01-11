@@ -4,6 +4,7 @@
       <div class="page cover">
         <article class="content">
           <h1>My First Book</h1>
+          <img class="img-fluid" src="./assets/sheep-round-cartoon-face-lamb-97168718.jpg" />
         </article>
       </div>
       <div class="page">
@@ -13,6 +14,7 @@
           <p>Please feel free to use it.</p>
         </article>
         <article class="content">
+          <h1>It is back of page 1</h1>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit,
           sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Augue ut lectus arcu bibendum at varius.
           Ac odio tempor orci dapibus ultrices in iaculis. Euismod in pellentesque massa placerat.
@@ -26,6 +28,7 @@
       </div>
       <div class="page">
         <article class="content">
+          <h1>It is page 2</h1>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit,
           sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Augue ut lectus arcu bibendum at varius.
           Ac odio tempor orci dapibus ultrices in iaculis. Euismod in pellentesque massa placerat.
@@ -37,6 +40,7 @@
           Laoreet sit amet cursus sit amet dictum sit amet. Gravida dictum fusce ut placerat orci nulla.
         </article>
         <article class="content">
+          <h1>It is back of page 2</h1>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit,
           sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Augue ut lectus arcu bibendum at varius.
           Ac odio tempor orci dapibus ultrices in iaculis. Euismod in pellentesque massa placerat.
@@ -50,6 +54,7 @@
       </div>
       <div class="page">
         <article class="content">
+          <h1>It is page 3</h1>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit,
           sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Augue ut lectus arcu bibendum at varius.
           Ac odio tempor orci dapibus ultrices in iaculis. Euismod in pellentesque massa placerat.
@@ -61,6 +66,7 @@
           Laoreet sit amet cursus sit amet dictum sit amet. Gravida dictum fusce ut placerat orci nulla.
         </article>
         <article class="content">
+          <h1>It is back of page 3</h1>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit,
           sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Augue ut lectus arcu bibendum at varius.
           Ac odio tempor orci dapibus ultrices in iaculis. Euismod in pellentesque massa placerat.
