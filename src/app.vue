@@ -3,8 +3,8 @@
     <Book>
       <div class="page cover">
         <article class="content">
-          <h1>My First Book</h1>
-          <img class="img-fluid" src="./assets/sheep-round-cartoon-face-lamb-97168718.jpg" />
+          <h1>Vue Mybook</h1>
+          <img class="img-fluid" src="./assets/black_cat_black_and_white-300px.png" />
         </article>
       </div>
       <div class="page">
