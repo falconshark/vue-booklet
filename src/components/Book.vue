@@ -129,7 +129,6 @@ export default {
         }
       }
       firstPage.style.zIndex = '3';
-      firstPage.nextElementSibling.style.zIndex = '2';
       lastPage.classList.add('lastPage');
     },
     nextPage() {
@@ -150,7 +149,7 @@ export default {
           // If this page have next page, set it to current page
           if (nextPage) {
             nextPage.style.zIndex = '3';
-            currentPage.removeAttribute('style');
+            currentPage.style.zIndex = '1';
             currentPage.classList.remove('currentPage');
             nextPage.classList.add('currentPage');
           }
@@ -173,7 +172,7 @@ export default {
           if(currentPage.classList.contains('lastPage') && currentPage.classList.contains('fliped')){
             currentPage.classList.remove('fliped');
           }else{
-            currentPage.removeAttribute('style');
+            currentPage.style.zIndex = '1';
             currentPage.classList.remove('currentPage');
             prevPage.style.zIndex = '3';
             prevPage.classList.remove('fliped');
