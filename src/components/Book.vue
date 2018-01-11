@@ -7,14 +7,14 @@
       </Pages>
     </div>
     <div class="book-control-buttons">
-      <div role="button" tabindex="0" class="book-control-button prev" v-show="!front"
+      <button tabindex="0" class="book-control-button prev" v-show="!front"
       v-on:keyup.enter="prevPage" v-on:click="prevPage">
         Prev
-      </div>
-      <div role="button" tabindex="0" class="book-control-button next" v-show="!back"
+      </button>
+      <button tabindex="0" class="book-control-button next" v-show="!back"
       v-on:keyup.enter="nextPage" v-on:click="nextPage">
         Next
-      </div>
+      </button>
     </div>
   </div>
 </template>
