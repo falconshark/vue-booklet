@@ -1,7 +1,7 @@
 {
   "name": "vue-mybook",
   "version": "0.0.1",
-  "description": " Vue book-like compoment ",
+  "description": "Vue book-like compoment for create a your own e-book",
   "author": "Mr.Twister <sardo.ip@sardo.work>",
   "main": "dist/lib/vue-mybook.min.js",
   "private": false,

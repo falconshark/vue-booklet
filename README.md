@@ -1,6 +1,38 @@
 # vue-mybook
+Vue book-like compoment for create a your own e-book
 
->  Vue book-like compoment 
+## Demo
+Readying
+
+## Installation
+```bash
+npm install vue-mybook --save
+```
+
+or
+
+```bash
+yarn add vue-mybook
+```
+
+## Usage
+
+Import module from days-calendar, then register it to Vue:
+
+
+```js
+import vueMybook from 'vue-mybook';
+
+new Vue({
+  el: '#your-dom-element',
+   components: {
+      vueMybook
+   }
+})
+```
+
+## Props
+Readying
 
 ## Build Setup
 
@@ -17,5 +49,3 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build --report
 ```
-
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
