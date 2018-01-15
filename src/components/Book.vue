@@ -72,10 +72,11 @@ export default {
     this.$on('onFlipStart', (direction) => {
       const currentPage = document.getElementsByClassName('currentPage')[0];
       const hiddenPages = this.getAllNextPage(currentPage);
-      if(!currentPage.classList.contains('firstPage')){
-        hiddenPages.forEach((page) => {
-          page.style.zIndex = '-1';
-        });
+      hiddenPages.forEach((page) => {
+        page.style.zIndex = '-1';
+      });
+      if(currentPage.classList.contains('firstPage')){
+        currentPage.nextElementSibling.style.zIndex = '2';
       }
       this.onFlipStart(currentPage, direction);
     });
