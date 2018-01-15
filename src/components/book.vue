@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import Pages from './Pages';
+import Pages from './pages';
 
 export default {
   name: 'Book',
