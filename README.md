@@ -4,7 +4,8 @@
 Vue Booklet is a compoment which can let your create a flipable book fastly, and is responsive.
 As it's used css animation, it will not support IE 9 and other old browser.
 
-##Demo
+## Demo
+
 http://book.sardo.work
 
 ## Installation
