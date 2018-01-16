@@ -1,9 +1,9 @@
 {
-  "name": "vue-mybook",
+  "name": "vue-booklet",
   "version": "0.0.1",
   "description": "Vue book-like compoment for create a your own e-book",
   "author": "Mr.Twister <sardo.ip@sardo.work>",
-  "main": "dist/lib/vue-mybook.min.js",
+  "main": "dist/lib/vue-booklet.min.js",
   "private": false,
   "license": "MIT",
   "scripts": {

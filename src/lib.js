@@ -1,4 +1,4 @@
-import vueMybook from './components/book.vue';
+import booklet from './components/book.vue';
 import './styles/lib.scss';
 
-export default vueMybook
+export default booklet

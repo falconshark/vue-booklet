@@ -10,7 +10,7 @@ function resolve (dir) {
 module.exports = {
   entry: {
     docs: './src/docs.js',
-    ['vue-mybook']: './src/lib.js'
+    ['vue-booklet']: './src/lib.js'
   },
   output: {
     path: config.build.assetsRoot,

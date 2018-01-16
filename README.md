@@ -1,41 +1,41 @@
-# vue-mybook
+# vue-booklet
 *Vue book-like compoment for create a your own e-book*
 
-Vue Mybook is a compoment which can let your create a flipable book fastly, and is responsive.
+Vue Booklet is a compoment which can let your create a flipable book fastly, and is responsive.
 As it's used css animation, it will not support IE 9 and other old browser.
 
 ## Installation
 ```bash
-npm install vue-mybook --save
+npm install vue-booklet --save
 ```
 
 or
 
 ```bash
-yarn add vue-mybook
+yarn add vue-booklet
 ```
 
 ## Usage
 
-Import module from vue-mybook, then register it to Vue:
+Import module from vue-booklet, then register it to Vue:
 
 ```js
-import vueMybook from 'vue-mybook';
+import booklet from 'vue-booklet';
 
 new Vue({
   el: '#your-dom-element',
    components: {
-      vueMybook
+      booklet
    }
 })
 ```
 
 And import the css file in your html file:
 ```html
-<link rel="stylesheet" href="vue-mybook.min.css">
+<link rel="stylesheet" href="vue-booklet.min.css">
 ```
 
-After that, you can use vue-mybook on your project now.
+After that, you can use vue-booklet on your project now.
 
 
 ####Example

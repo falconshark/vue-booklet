@@ -65,7 +65,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     }),
     // split your library css/js into separate files
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vue-mybook'
+      name: 'vue-booklet'
     }),
     // split vendor js into its own file
     new webpack.optimize.CommonsChunkPlugin({

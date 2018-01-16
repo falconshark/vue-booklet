@@ -3,7 +3,7 @@
     <Book>
       <div class="page cover">
         <article class="content">
-          <h1>Vue Mybook</h1>
+          <h1>Vue Booklet</h1>
           <img class="img-fluid" src="./assets/black_cat_black_and_white-300px.png" />
         </article>
       </div>
