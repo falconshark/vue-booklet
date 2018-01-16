@@ -4,6 +4,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 src/styles/*.css
+index.html
 dist
 
 # Editor directories and files
