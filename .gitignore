@@ -5,7 +5,7 @@ yarn-debug.log*
 yarn-error.log*
 src/styles/*.css
 index.html
-dist
+dist/docs
 
 # Editor directories and files
 .idea
