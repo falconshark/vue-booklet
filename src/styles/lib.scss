@@ -6,16 +6,21 @@
   display: none;
 }
 
-.content{
-  border: 1px solid #ddd;
-  padding: 5%;
-  margin-bottom: 0.5em;
+.book{
+  .page{
+    .content{
+      border: 1px solid #ddd;
+      padding: 5%;
+      margin-bottom: 0.5em;
+      text-align: left;
+    }
+  }
 }
 
 @media (min-width: 768px) {
   .vue-booklet{
     width: 100%;
-    height: 100%;
+    height: 100vh;
     margin: 0.5em;
     -webkit-transform-style: preserve-3d;
     -moz-transform-style: preserve-3d;

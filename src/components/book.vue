@@ -183,7 +183,7 @@ export default {
             prevPage.classList.add('currentPage');
            }
 
-           if (prevPage.classList.contains('firstPage') && this.opened) {
+           if (prevPage.classList.contains('firstPage') && !prevPage.classList.contains('fliped') && this.opened) {
              this.$emit('onClosed');
              currentPage.style.zIndex = '2';
            }
