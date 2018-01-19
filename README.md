@@ -41,7 +41,7 @@ And import the css file in your html file:
 
 After that, you can use vue-booklet on your project now.
 
-#Without webpack
+### Without webpack
 
 ```html
 <head>
@@ -73,7 +73,7 @@ new Vue({
 </script>
 ```
 
-####Example
+## Example
 ```html
 <Book>
   <div class="page cover">
