@@ -1,4 +1,8 @@
-import booklet from './components/book.vue';
+import Book from './components/book.vue';
 import './styles/lib.scss';
 
-export default booklet
+if (typeof window !== 'undefined' && window.Vue) {
+	window.Vue.component('Book', Book);
+}
+
+export default Book

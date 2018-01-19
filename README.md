@@ -41,6 +41,37 @@ And import the css file in your html file:
 
 After that, you can use vue-booklet on your project now.
 
+#Without webpack
+
+```html
+<head>
+  <link rel="stylesheet" href="vue-booklet.min.css">
+</head>
+<div id="app">
+  <Book>
+    <div class="page cover">
+      <article class="content">
+        <h1>My first book</h1>
+      </article>
+    </div>
+    <div class="page">
+      <article class="content">
+        <h1>Hello World !</h1>
+        <p>Using vue-booklet to create a book which can fliped.</p>
+        <p>Please feel free to use it.</p>
+      </article>
+    </div>
+  </Book>
+</div>
+
+<script type="text/javascript" src="http://vuejs.org/js/vue.min.js"></script>
+<script type="text/javascript" src="vue-booklet.min.js"></script>
+<script>
+new Vue({
+  el: '#vue-booklet-container',
+})
+</script>
+```
 
 ####Example
 ```html
