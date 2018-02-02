@@ -118,7 +118,7 @@ export default {
         book.classList.add('closed');
       }
 
-      this.onClosed(book);
+      this.onClosed(book, position);
     });
   },
   methods: {

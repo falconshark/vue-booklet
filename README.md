@@ -97,11 +97,11 @@ Set the transition time of each book page.
 
 Default value is 0.8s.
 
-#### onOpened(book) (optional)
-A callback which happens after book opened. Pass the book dom which you can control it.
+#### onOpened(book, position) (optional)
+A callback which happens after book opened. Pass the book dom which you can control it, and position of book.
 
-#### onClosed(book) (optional)
-A callback which happens after book closed. Pass the book dom which you can control it.
+#### onClosed(book, position) (optional)
+A callback which happens after book closed. Pass the book dom which you can control it, and position of book.
 
 #### onFlipStart(currentPage, direction) (optional)
 A callback which happens before a page filped. Pass the page dom which you can control it,
