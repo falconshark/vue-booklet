@@ -61,11 +61,11 @@ export default {
     const book = this.$refs.book;
 
     // Book opened event
-    this.$on('onOpened', () => {
+    this.$on('onOpened', (position) => {
       this.opened = true;
       book.classList.add('opened');
       book.classList.remove('closed');
-      this.onOpened(book);
+      this.onOpened(book, position);
     });
 
     // Book page fliped event
@@ -73,7 +73,11 @@ export default {
       const currentPage = document.getElementsByClassName('currentPage')[0];
       const hiddenPages = this.getAllNextPage(currentPage);
       hiddenPages.forEach((page) => {
-        page.style.zIndex = '-1';
+        if(!page.classList.contains('lastPage')){
+          page.style.zIndex = '-1';
+        }else{
+          page.style.zIndex = '-3';
+        }
       });
       if(currentPage.classList.contains('firstPage')){
         currentPage.nextElementSibling.style.zIndex = '2';
@@ -100,12 +104,19 @@ export default {
     });
 
     // Book closed event
-    this.$on('onClosed', () => {
+    this.$on('onClosed', (position) => {
       const book = this.$refs.book;
       this.opened = false;
-      this.initPage();
-      book.classList.add('closed');
+
       book.classList.remove('opened');
+
+      if(position === 'back'){
+        book.classList.remove('closed');
+        book.classList.add('closed-back');
+      }else{
+        book.classList.remove('closed-back');
+        book.classList.add('closed');
+      }
 
       this.onClosed(book);
     });
@@ -138,12 +149,17 @@ export default {
     nextPage() {
       const currentPage = document.getElementsByClassName('currentPage')[0];
       const nextPage = currentPage.nextElementSibling;
+      const timeOut = this.pageTransitionTime * 4 * 100;
 
       if(this.clickable){
         this.clickable = false;
-        // If user click on cover and book not opened
+        // If current page is first page and book not opened
         if (currentPage.classList.contains('firstPage') && !this.opened) {
-          this.$emit('onOpened');
+          this.$emit('onOpened', 'front');
+        }
+
+        if (currentPage.classList.contains('lastPage') && this.opened) {
+          this.$emit('onClosed', 'back');
         }
 
         currentPage.classList.add('fliped');
@@ -159,12 +175,13 @@ export default {
           }
           this.clickable = true;
           this.$emit('onFlipEnd', 'next');
-        }, 200);
+        }, timeOut);
       }
     },
     prevPage() {
       const currentPage = document.getElementsByClassName('currentPage')[0];
       const prevPage = currentPage.previousElementSibling;
+      const timeOut = this.pageTransitionTime * 4 * 100;
 
       if(this.clickable){
         this.clickable = false;
@@ -183,16 +200,22 @@ export default {
             prevPage.classList.add('currentPage');
            }
 
+           //If previous page is first page and book not opened, close the book
            if (prevPage.classList.contains('firstPage') && !prevPage.classList.contains('fliped') && this.opened) {
-             this.$emit('onClosed');
+             this.$emit('onClosed', 'front');
              currentPage.style.zIndex = '2';
+           }
+
+           //If current page is last page , book not opened and it is not filped, open the book
+           if (currentPage.classList.contains('lastPage') && !currentPage.classList.contains('fliped') && !this.opened) {
+             this.$emit('onOpened', 'back');
            }
         }
 
         setTimeout(() => {
           this.clickable = true;
           this.$emit('onFlipEnd', 'back');
-        }, 200);
+        }, timeOut);
       }
     },
     getAllNextPage(currentPage){
