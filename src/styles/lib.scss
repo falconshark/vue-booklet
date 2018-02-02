@@ -84,25 +84,11 @@
     width: 50%;
     height: 100%;
     color: #222;
-    transform-origin: 0 50%;
     background: none;
     top: 0;
     left: 0;
     border: 0;
-
-    .content{
-      position: relative;
-      width: 100%;
-      max-width: 100%;
-      padding: 5%;
-      margin-top: 0;
-      transform-origin: center center;
-      backface-visibility: hidden;
-      overflow: auto;
-      -webkit-transform-style: preserve-3d;
-      -moz-transform-style: preserve-3d;
-      transform-style: preserve-3d;
-    }
+    opacity: 0;
   }
 
   .page{
