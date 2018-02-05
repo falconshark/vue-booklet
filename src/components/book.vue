@@ -1,7 +1,6 @@
 <template>
   <div class="vue-booklet">
     <div class="book closed" ref="book">
-      <div class="cover-before" />
       <Pages :opened="opened" :initPage="initPage">
         <slot></slot>
       </Pages>

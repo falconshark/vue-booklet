@@ -65,13 +65,13 @@
   }
 
   .closed{
-    -webkit-transform: translateX(-20vw);
-    transform: translateX(-20vw);
+    -webkit-transform: translateX(-25%);
+    transform: translateX(-25%);
   }
 
   .closed-back{
-    -webkit-transform: translateX(20vw);
-    transform: translateX(20vw);
+    -webkit-transform: translateX(25%);
+    transform: translateX(25%);
   }
 
   .opened{
@@ -80,6 +80,7 @@
   }
 
   .cover-before{
+    display: none;
     position: absolute;
     width: 50%;
     height: 100%;
