@@ -78,7 +78,7 @@ export default {
           page.style.zIndex = '-3';
         }
       });
-      if(currentPage.classList.contains('firstPage')){
+      if(currentPage.classList.contains('firstPage') && currentPage.nextElementSibling){
         currentPage.nextElementSibling.style.zIndex = '2';
       }
       this.onFlipStart(currentPage, direction);
@@ -142,7 +142,9 @@ export default {
         }
       }
       firstPage.style.zIndex = '3';
-      firstPage.nextElementSibling.style.zIndex = '2';
+      if(firstPage.nextElementSibling){
+        firstPage.nextElementSibling.style.zIndex = '2';
+      }
       lastPage.classList.add('lastPage');
     },
     nextPage() {
@@ -209,6 +211,12 @@ export default {
            if (currentPage.classList.contains('lastPage') && !currentPage.classList.contains('fliped') && !this.opened) {
              this.$emit('onOpened', 'back');
            }
+        }else{
+          //If the book only have one page, undo flip only
+          if(currentPage.classList.contains('firstPage') && currentPage.classList.contains('fliped')){
+            this.$emit('onClosed', 'front');
+            currentPage.classList.remove('fliped');
+          }
         }
 
         setTimeout(() => {
