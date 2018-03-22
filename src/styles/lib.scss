@@ -39,6 +39,21 @@
     transition: all .8s;
   }
 
+  .control-page{
+    position: absolute;
+    width: 100px;
+    height: 100%;
+    z-index: 99;
+  }
+
+  .control-page-left{
+    left: 0;
+  }
+
+  .control-page-right{
+    right: 0;
+  }
+
   .book-control-buttons{
     display: block;
     text-align: center;

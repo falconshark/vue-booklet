@@ -1,9 +1,11 @@
 <template>
   <div class="vue-booklet">
     <div class="book closed" ref="book">
-      <Pages :opened="opened" :initPage="initPage">
+      <div class="pages" ref="pages">
+        <div class="control-page control-page-left" v-on:click="prevPage"></div>
+        <div class="control-page control-page-right" v-on:click="nextPage"></div>
         <slot></slot>
-      </Pages>
+      </div>
     </div>
     <div class="book-control-buttons">
       <button tabindex="0" class="book-control-button prev" v-show="!front"
@@ -19,6 +21,8 @@
 </template>
 
 <script>
+import PerfectScrollbar from 'perfect-scrollbar';
+import 'perfect-scrollbar/css/perfect-scrollbar.css';
 import Pages from './pages';
 
 export default {
@@ -58,6 +62,8 @@ export default {
   },
   mounted() {
     const book = this.$refs.book;
+    this.initPage();
+    this.initContent();
 
     // Book opened event
     this.$on('onOpened', (position) => {
@@ -146,6 +152,13 @@ export default {
         firstPage.nextElementSibling.style.zIndex = '2';
       }
       lastPage.classList.add('lastPage');
+    },
+    initContent(){
+      const contents = document.getElementsByClassName('content');
+      for(let i = 0; i < contents.length; i++){
+        const content = contents[i];
+        const ps = new PerfectScrollbar(content);
+      }
     },
     nextPage() {
       const currentPage = document.getElementsByClassName('currentPage')[0];
