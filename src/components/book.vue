@@ -23,13 +23,9 @@
 <script>
 import PerfectScrollbar from 'perfect-scrollbar';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
-import Pages from './pages';
 
 export default {
   name: 'Book',
-  components: {
-    Pages,
-  },
   data() {
     return {
       opened: false,
