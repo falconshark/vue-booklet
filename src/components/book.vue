@@ -138,7 +138,8 @@ export default {
   },
   methods: {
     initPage(){
-      const pages = document.getElementsByClassName('page');
+      let pages = Array.from(document.getElementsByClassName('page'));
+
       const firstPage = pages[0];
       const lastPage = pages[pages.length - 1];
       const pageTransitionTime = this.pageTransitionTime;
@@ -168,7 +169,13 @@ export default {
       }
       lastPage.classList.add('lastPage');
 
-      this.totolPages = pages.length - 2;
+      pages = pages.filter((page) =>{
+        if(!page.classList.contains('cover') && !page.classList.contains('back')){
+          return page;
+        }
+      });
+
+      this.totolPages = pages.length;
     },
     initContent(){
       const contents = document.getElementsByClassName('content');
@@ -219,7 +226,7 @@ export default {
         this.$emit('onFlipStart', 'back');
 
         // If user click on cover and book not opened
-        if (prevPage) {
+        if (prevPage && !prevPage.classList.contains('control-page')) {
           // If last page fliped, undo flip only
           if(currentPage.classList.contains('lastPage') && currentPage.classList.contains('fliped')){
             currentPage.classList.remove('fliped');
