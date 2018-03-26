@@ -164,6 +164,30 @@
     -webkit-transform: rotateY(-180deg) translateZ(1px);
     transform: rotateY(-180deg) translateZ(1px);
   }
+
+  .progress{
+    width:100%;
+    height:20px;
+    background-color: #ccc;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .left{
+    height:100%;
+    width: 30%;
+    background-color: greenyellow;
+    position: relative;
+  }
+  .ball{
+    height:100%;
+    width:20px;
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    border-radius:10px;
+    background-color: red;
+    position: absolute;
+    right: -10px;
+  }
 }
 
 .back{

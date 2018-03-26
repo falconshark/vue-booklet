@@ -7,6 +7,9 @@
         <slot></slot>
       </div>
     </div>
+    <div class="page-number" v-if="currentPageNum !== 0">
+      Pages: {{currentPageNum}} / {{totolPages}}
+    </div>
     <div class="book-control-buttons">
       <button tabindex="0" class="book-control-button prev" v-show="!front"
       v-on:keyup.enter="prevPage" v-on:click="prevPage">
@@ -32,6 +35,8 @@ export default {
       front: true,
       back: false,
       clickable: true,
+      totolPages: 0,
+      currentPageNum: 0,
     };
   },
   props: {
@@ -88,6 +93,16 @@ export default {
 
     this.$on('onFlipEnd', (direction) => {
       const currentPage = document.getElementsByClassName('currentPage')[0];
+      const pageNumber = currentPage.dataset.index;
+
+      //If page contains page number, show it; Otherwise it will be 0.
+      if(pageNumber){
+        this.currentPageNum = pageNumber;
+      }else if(currentPage.classList.contains('back') && !currentPage.classList.contains('fliped')){
+        this.currentPageNum = currentPage.previousElementSibling.dataset.index;
+      }else{
+        this.currentPageNum = 0;
+      }
 
       if (currentPage.classList.contains('firstPage') && !currentPage.classList.contains('fliped')){
         this.front = true;
@@ -118,7 +133,6 @@ export default {
         book.classList.remove('closed-back');
         book.classList.add('closed');
       }
-
       this.onClosed(book, position);
     });
   },
@@ -137,6 +151,11 @@ export default {
         const page = pages[i];
         page.style.zIndex = '-1';
         page.style.transition = 'transform ' + pageTransitionTime + 's';
+
+        if(!page.classList.contains('cover') && !page.classList.contains('back')){
+          page.dataset.index = i;
+        }
+
         if(index % 2 === 0){
           page.classList.add('oven');
         }else{
@@ -148,6 +167,8 @@ export default {
         firstPage.nextElementSibling.style.zIndex = '2';
       }
       lastPage.classList.add('lastPage');
+
+      this.totolPages = pages.length - 2;
     },
     initContent(){
       const contents = document.getElementsByClassName('content');
