@@ -7,6 +7,13 @@
         <slot></slot>
       </div>
     </div>
+    <div class="select-page-wrapper">
+      <label for="select-page">Select page: </label>
+      <select id="select-page" v-on:change="selectPage">
+        <option v-for="pageNumber in totolPages" :value="pageNumber">{{pageNumber}}</option>
+      </select>
+    </div>
+
     <div class="page-number" v-if="currentPageNum !== 0">
       Pages: {{currentPageNum}} / {{totolPages}}
     </div>
@@ -85,23 +92,21 @@ export default {
           page.style.zIndex = '-3';
         }
       });
+
       if(currentPage.classList.contains('firstPage') && currentPage.nextElementSibling){
         currentPage.nextElementSibling.style.zIndex = '2';
       }
+
       this.onFlipStart(currentPage, direction);
     });
 
     this.$on('onFlipEnd', (direction) => {
       const currentPage = document.getElementsByClassName('currentPage')[0];
-      const pageNumber = currentPage.dataset.index;
+      const pageNumber = parseInt(currentPage.dataset.index);
+      this.currentPageNum = pageNumber;
 
-      //If page contains page number, show it; Otherwise it will be 0.
-      if(pageNumber){
-        this.currentPageNum = pageNumber;
-      }else if(currentPage.classList.contains('back') && !currentPage.classList.contains('fliped')){
-        this.currentPageNum = currentPage.previousElementSibling.dataset.index;
-      }else{
-        this.currentPageNum = 0;
+      if(currentPage.classList.contains('back') && currentPage.classList.contains('fliped')){
+        this.currentPageNum = pageNumber + 1;
       }
 
       if (currentPage.classList.contains('firstPage') && !currentPage.classList.contains('fliped')){
@@ -138,7 +143,7 @@ export default {
   },
   methods: {
     initPage(){
-      let pages = Array.from(document.getElementsByClassName('page'));
+      let pages = document.getElementsByClassName('page');
 
       const firstPage = pages[0];
       const lastPage = pages[pages.length - 1];
@@ -153,9 +158,7 @@ export default {
         page.style.zIndex = '-1';
         page.style.transition = 'transform ' + pageTransitionTime + 's';
 
-        if(!page.classList.contains('cover') && !page.classList.contains('back')){
-          page.dataset.index = i;
-        }
+        page.dataset.index = index;
 
         if(index % 2 === 0){
           page.classList.add('oven');
@@ -169,13 +172,7 @@ export default {
       }
       lastPage.classList.add('lastPage');
 
-      pages = pages.filter((page) =>{
-        if(!page.classList.contains('cover') && !page.classList.contains('back')){
-          return page;
-        }
-      });
-
-      this.totolPages = pages.length;
+      this.totolPages = pages.length + 1;
     },
     initContent(){
       const contents = document.getElementsByClassName('content');
@@ -261,6 +258,68 @@ export default {
           this.$emit('onFlipEnd', 'back');
         }, timeOut);
       }
+    },
+    selectPage(e){
+      const selectedPageNum = e.target.value;
+      const currentPage = document.getElementsByClassName('currentPage')[0];
+      var selectedPage = document.querySelector('[data-index="' + selectedPageNum + '"]');
+
+      if(!selectedPage){
+        selectedPage = document.getElementsByClassName('lastPage')[0];
+        selectedPage.classList.add('fliped');
+        this.$emit('onClosed', 'back');
+      }else{
+        //Set selected page to current page and top
+        selectedPage.classList.remove('fliped');
+
+        //If book is closed, opened it
+        if (!this.opened) {
+          this.$emit('onOpened', 'front');
+        }
+      }
+
+      const prevPages = Array.from(this.getAllPrevPage(selectedPage));
+      const nextPages = Array.from(this.getAllNextPage(selectedPage));
+
+      currentPage.classList.remove('currentPage');
+      selectedPage.classList.add('currentPage');
+      selectedPage.style.zIndex = 3;
+
+      if(selectedPage.classList.contains('firstPage') && selectedPage.nextElementSibling){
+        this.$emit('onClosed', 'front');
+        selectedPage.nextElementSibling.style.zIndex = '2';
+      }
+
+      //Flip all of the previous page
+      prevPages.forEach(function(page){
+        page.classList.add('fliped');
+        page.style.zIndex = '1';
+      });
+
+      //Hidden all of the old page
+      nextPages.forEach((page) => {
+        page.classList.remove('fliped');
+        if(!page.classList.contains('lastPage')){
+          page.style.zIndex = '-1';
+        }else{
+          page.style.zIndex = '-3';
+        }
+      });
+
+      this.$emit('onFlipStart', 'front');
+      this.$emit('onFlipEnd', 'front');
+    },
+    getAllPrevPage(currentPage){
+      const pages = [];
+      let prevPage = currentPage.previousElementSibling;
+      while (prevPage) {
+        if(prevPage.classList.contains('control-page')){
+          break;
+        }
+        pages.push(prevPage);
+        prevPage = prevPage.previousElementSibling;
+      }
+      return pages;
     },
     getAllNextPage(currentPage){
       const pages = [];
