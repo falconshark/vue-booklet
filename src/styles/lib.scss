@@ -17,6 +17,36 @@
   }
 }
 
+.select-page-wrapper{
+  display: none;
+  margin-top: 1em;
+  font-size: 1.2em;
+
+  select{
+    margin-left: 1em;
+    width: 20%;
+  }
+}
+
+.select-page-wrapper-mobile{
+  display: block;
+  font-size: 1.2em;
+  margin-top: 1.2em;
+  margin-bottom: 1em;
+
+  select{
+    margin-left: 1em;
+    width: 20%;
+  }
+}
+
+.page-number{
+  display: none;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  font-size: 1.2em;
+}
+
 @media (min-width: 768px) {
   .vue-booklet{
     width: 100%;
@@ -95,19 +125,15 @@
   }
 
   .page-number{
-    margin-top: 1em;
-    margin-bottom: 1em;
-    font-size: 1.2em;
+    display: block;
   }
 
   .select-page-wrapper{
-    margin-top: 1em;
-    font-size: 1.2em;
+    display: block;
+  }
 
-    select{
-      margin-left: 1em;
-      width: 20%;
-    }
+  .select-page-wrapper-mobile{
+    display: none;
   }
 
   .page{

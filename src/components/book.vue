@@ -1,5 +1,15 @@
 <template>
   <div class="vue-booklet">
+
+    <div class="select-page-wrapper-mobile">
+      <label for="select-page">{{translateText.selectPage}}: </label>
+      <select id="select-page-mobile" v-on:change="selectPageMobile">
+        <option v-for="pageNumber in totolPages" :ref="'page' + pageNumber" :value="pageNumber">
+          {{pageNumber}}
+        </option>
+      </select>
+    </div>
+
     <div class="book closed" ref="book">
       <div class="pages" ref="pages">
         <div class="control-page control-page-left" v-on:click="prevPage"></div>
@@ -7,24 +17,27 @@
         <slot></slot>
       </div>
     </div>
+
     <div class="select-page-wrapper">
-      <label for="select-page">Select page: </label>
+      <label for="select-page">{{translateText.selectPage}}: </label>
       <select id="select-page" v-on:change="selectPage">
-        <option v-for="pageNumber in totolPages" :value="pageNumber">{{pageNumber}}</option>
+        <option v-for="pageNumber in totolPages" :ref="'page' + pageNumber" :value="pageNumber">
+          {{pageNumber}}
+        </option>
       </select>
     </div>
 
     <div class="page-number" v-if="currentPageNum !== 0">
-      Pages: {{currentPageNum}} / {{totolPages}}
+      {{translateText.pages}} : {{currentPageNum}} / {{totolPages}}
     </div>
     <div class="book-control-buttons">
       <button tabindex="0" class="book-control-button prev" v-show="!front"
       v-on:keyup.enter="prevPage" v-on:click="prevPage">
-        Prev
+        {{translateText.prev}}
       </button>
       <button tabindex="0" class="book-control-button next" v-show="!back"
       v-on:keyup.enter="nextPage" v-on:click="nextPage">
-        Next
+        {{translateText.next}}
       </button>
     </div>
   </div>
@@ -43,10 +56,28 @@ export default {
       back: false,
       clickable: true,
       totolPages: 0,
-      currentPageNum: 0,
+      currentPageNum: 1,
+      text: {
+        'en': {
+          'selectPage': 'Select page',
+          'pages': 'Pages',
+          'prev': 'Prev',
+          'next': 'Next',
+        },
+        'zh-hant': {
+          'selectPage': '跳至指定頁數',
+          'pages': '頁數',
+          'prev': '上一頁',
+          'next': '下一頁',
+        }
+      }
     };
   },
   props: {
+    langcode: {
+      type: String,
+      default: 'en',
+    },
     pageTransitionTime: {
       type: Number,
       default: 0.8,
@@ -66,6 +97,12 @@ export default {
     onClosed: {
       type: Function,
       default: () => {},
+    },
+  },
+  computed: {
+    translateText: function() {
+      const langcode = this.langcode;
+      return this.text[langcode];
     }
   },
   mounted() {
@@ -103,11 +140,21 @@ export default {
     this.$on('onFlipEnd', (direction) => {
       const currentPage = document.getElementsByClassName('currentPage')[0];
       const pageNumber = parseInt(currentPage.dataset.index);
+      const options = Array.from(document.getElementsByTagName('option'));
       this.currentPageNum = pageNumber;
 
       if(currentPage.classList.contains('back') && currentPage.classList.contains('fliped')){
         this.currentPageNum = pageNumber + 1;
       }
+
+      const selectOption = 'page'+ this.currentPageNum;
+
+      options.forEach(function(option){
+        option.removeAttribute('selected');
+      });
+      this.$refs[selectOption].forEach(function(option){
+        option.setAttribute('selected', 'selected');
+      });
 
       if (currentPage.classList.contains('firstPage') && !currentPage.classList.contains('fliped')){
         this.front = true;
@@ -157,7 +204,6 @@ export default {
         const page = pages[i];
         page.style.zIndex = '-1';
         page.style.transition = 'transform ' + pageTransitionTime + 's';
-
         page.dataset.index = index;
 
         if(index % 2 === 0){
@@ -179,6 +225,7 @@ export default {
       for(let i = 0; i < contents.length; i++){
         const content = contents[i];
         const ps = new PerfectScrollbar(content);
+        this.scrollBar = ps;
       }
     },
     nextPage() {
@@ -308,6 +355,15 @@ export default {
 
       this.$emit('onFlipStart', 'front');
       this.$emit('onFlipEnd', 'front');
+    },
+    selectPageMobile(e){
+      const selectedPageNum = e.target.value;
+      const lastPageNum = parseInt(selectedPageNum) - 1;
+      var selectedPage = document.querySelector('[data-index="' + selectedPageNum + '"]');
+      if(!selectedPage){
+        selectedPage = document.querySelector('[data-index="' + lastPageNum + '"]');
+      }
+      selectedPage.scrollIntoView();
     },
     getAllPrevPage(currentPage){
       const pages = [];
