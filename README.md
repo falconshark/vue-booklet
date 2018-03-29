@@ -92,6 +92,11 @@ new Vue({
 ```
 
 ## Props
+
+#### langcode(optional)
+Set the language of booklet UI. Support language: English (en), Traditional Chinese (zh-hant)
+Default value is en.
+
 #### pageTransitionTime (optional)
 Set the transition time of each book page.
 
