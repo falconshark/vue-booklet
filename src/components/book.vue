@@ -4,7 +4,7 @@
     <div class="select-page-wrapper-mobile">
       <label for="select-page">{{translateText.selectPage}}: </label>
       <select id="select-page-mobile" v-on:change="selectPageMobile">
-        <option v-for="pageNumber in totolPages" :ref="'page' + pageNumber" :value="pageNumber">
+        <option v-for="pageNumber in totolPages" :value="pageNumber">
           {{pageNumber}}
         </option>
       </select>
@@ -139,22 +139,15 @@ export default {
 
     this.$on('onFlipEnd', (direction) => {
       const currentPage = document.getElementsByClassName('currentPage')[0];
+      const selecter = document.getElementById('select-page');
       const pageNumber = parseInt(currentPage.dataset.index);
-      const options = Array.from(document.getElementsByTagName('option'));
       this.currentPageNum = pageNumber;
 
       if(currentPage.classList.contains('back') && currentPage.classList.contains('fliped')){
         this.currentPageNum = pageNumber + 1;
       }
 
-      const selectOption = 'page'+ this.currentPageNum;
-
-      options.forEach(function(option){
-        option.removeAttribute('selected');
-      });
-      this.$refs[selectOption].forEach(function(option){
-        option.setAttribute('selected', 'selected');
-      });
+      selecter.value = this.currentPageNum;
 
       if (currentPage.classList.contains('firstPage') && !currentPage.classList.contains('fliped')){
         this.front = true;

@@ -21,6 +21,7 @@
   display: none;
   margin-top: 1em;
   font-size: 1.2em;
+  text-align: center;
 
   select{
     margin-left: 1em;
@@ -30,6 +31,7 @@
 
 .select-page-wrapper-mobile{
   display: block;
+  text-align: center;
   font-size: 1.2em;
   margin-top: 1.2em;
   margin-bottom: 1em;
@@ -45,6 +47,7 @@
   margin-top: 1em;
   margin-bottom: 1em;
   font-size: 1.2em;
+  text-align: center;
 }
 
 @media (min-width: 768px) {
