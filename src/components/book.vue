@@ -1,6 +1,5 @@
 <template>
   <div class="vue-booklet">
-
     <div class="select-page-wrapper-mobile">
       <label for="select-page">{{translateText.selectPage}}: </label>
       <select id="select-page-mobile" v-on:change="selectPageMobile">
@@ -65,7 +64,6 @@ export default {
       default: 'en',
     },
     translation: {
-      type: Object,
       default: () =>{
         return {
           'en': {
@@ -113,7 +111,12 @@ export default {
   computed: {
     translateText: function() {
       const langcode = this.langcode;
-      return this.translation[langcode];
+      try{
+        var translation = JSON.parse(translation);
+      }catch(ex){
+        var translation = this.translation;
+      }
+      return translation[langcode];
     }
   },
   mounted() {
