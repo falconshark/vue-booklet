@@ -143,7 +143,7 @@ export default {
       const pageNumber = parseInt(currentPage.dataset.index);
       this.currentPageNum = pageNumber;
 
-      if(currentPage.classList.contains('back') && currentPage.classList.contains('fliped')){
+      if(currentPage.classList.contains('lastPage') && currentPage.classList.contains('fliped')){
         this.currentPageNum = pageNumber + 1;
       }
 
