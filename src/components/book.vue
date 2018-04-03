@@ -33,14 +33,14 @@
     <div class="book-control-buttons">
       <button tabindex="0" class="book-control-button prev" v-show="!front"
       v-on:keyup.enter="prevPage" v-on:click="prevPage">
-        {{translateText.prev}}
-      </button>
-      <button tabindex="0" class="book-control-button next" v-show="!back"
-      v-on:keyup.enter="nextPage" v-on:click="nextPage">
-        {{translateText.next}}
-      </button>
-    </div>
-  </div>
+      {{translateText.prev}}
+    </button>
+    <button tabindex="0" class="book-control-button next" v-show="!back"
+    v-on:keyup.enter="nextPage" v-on:click="nextPage">
+    {{translateText.next}}
+  </button>
+</div>
+</div>
 </template>
 
 <script>
@@ -57,26 +57,37 @@ export default {
       clickable: true,
       totolPages: 0,
       currentPageNum: 1,
-      text: {
-        'en': {
-          'selectPage': 'Select page',
-          'pages': 'Pages',
-          'prev': 'Prev',
-          'next': 'Next',
-        },
-        'zh-hant': {
-          'selectPage': '跳至指定頁數',
-          'pages': '頁數',
-          'prev': '上一頁',
-          'next': '下一頁',
-        }
-      }
     };
   },
   props: {
     langcode: {
       type: String,
       default: 'en',
+    },
+    translation: {
+      type: Object,
+      default: () =>{
+        return {
+          'en': {
+            'selectPage': 'Select page',
+            'pages': 'Pages',
+            'prev': 'Prev',
+            'next': 'Next',
+          },
+          'zh-hant': {
+            'selectPage': '跳至指定頁數',
+            'pages': '頁數',
+            'prev': '上一頁',
+            'next': '下一頁',
+          },
+          'zh-hans': {
+            'selectPage': '跳至指定页数',
+            'pages': '页数',
+            'prev': '上一页',
+            'next': '下一页',
+          },
+        };
+      }
     },
     pageTransitionTime: {
       type: Number,
@@ -102,7 +113,7 @@ export default {
   computed: {
     translateText: function() {
       const langcode = this.langcode;
-      return this.text[langcode];
+      return this.translation[langcode];
     }
   },
   mounted() {
@@ -274,18 +285,18 @@ export default {
             prevPage.style.zIndex = '3';
             prevPage.classList.remove('fliped');
             prevPage.classList.add('currentPage');
-           }
+          }
 
-           //If current page is last page , book not opened and it is not filped, open the book
-           if (currentPage.classList.contains('lastPage') && !currentPage.classList.contains('fliped') && !this.opened) {
-             this.$emit('onOpened', 'back');
-           }
-           
-           //If previous page is first page and book not opened, close the book
-           if (prevPage.classList.contains('firstPage') && !prevPage.classList.contains('fliped') && this.opened) {
-             this.$emit('onClosed', 'front');
-             currentPage.style.zIndex = '2';
-           }
+          //If current page is last page , book not opened and it is not filped, open the book
+          if (currentPage.classList.contains('lastPage') && !currentPage.classList.contains('fliped') && !this.opened) {
+            this.$emit('onOpened', 'back');
+          }
+
+          //If previous page is first page and book not opened, close the book
+          if (prevPage.classList.contains('firstPage') && !prevPage.classList.contains('fliped') && this.opened) {
+            this.$emit('onClosed', 'front');
+            currentPage.style.zIndex = '2';
+          }
 
         }else{
           if(currentPage.classList.contains('firstPage') && currentPage.classList.contains('fliped')){

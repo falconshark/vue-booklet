@@ -94,8 +94,35 @@ new Vue({
 ## Props
 
 #### langcode(optional)
-Set the language of booklet UI. Support language: English (en), Traditional Chinese (zh-hant)
+Set the language of booklet UI.
+Current support language is English (en), Traditional Chinese (zh-hant) and Simplified Chinese (zh-hans). You can add new langcode with translation props.
 Default value is en.
+
+#### translation(optional)
+Define translation of booklet UI. Pass object with translated text.
+Default value:
+```js
+{
+  'en': {
+    'selectPage': 'Select page',
+    'pages': 'Pages',
+    'prev': 'Prev',
+    'next': 'Next',
+  },
+  'zh-hant': {
+    'selectPage': '跳至指定頁數',
+    'pages': '頁數',
+    'prev': '上一頁',
+    'next': '下一頁',
+  },
+  'zh-hans': {
+    'selectPage': '跳至指定页数',
+    'pages': '页数',
+    'prev': '上一页',
+    'next': '下一页',
+  },
+}
+```
 
 #### pageTransitionTime (optional)
 Set the transition time of each book page.
