@@ -115,6 +115,7 @@ export default {
       this.opened = true;
       book.classList.add('opened');
       book.classList.remove('closed');
+      book.classList.remove('closed-back');
       this.onOpened(book, position);
     });
 
@@ -275,18 +276,18 @@ export default {
             prevPage.classList.add('currentPage');
            }
 
+           //If current page is last page , book not opened and it is not filped, open the book
+           if (currentPage.classList.contains('lastPage') && !currentPage.classList.contains('fliped') && !this.opened) {
+             this.$emit('onOpened', 'back');
+           }
+           
            //If previous page is first page and book not opened, close the book
            if (prevPage.classList.contains('firstPage') && !prevPage.classList.contains('fliped') && this.opened) {
              this.$emit('onClosed', 'front');
              currentPage.style.zIndex = '2';
            }
 
-           //If current page is last page , book not opened and it is not filped, open the book
-           if (currentPage.classList.contains('lastPage') && !currentPage.classList.contains('fliped') && !this.opened) {
-             this.$emit('onOpened', 'back');
-           }
         }else{
-          //If the book only have one page, undo flip only
           if(currentPage.classList.contains('firstPage') && currentPage.classList.contains('fliped')){
             this.$emit('onClosed', 'front');
             currentPage.classList.remove('fliped');
