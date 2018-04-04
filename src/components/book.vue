@@ -65,7 +65,7 @@ export default {
     },
     translation: {
       default: () =>{
-        return {
+        return JSON.stringify({
           'en': {
             'selectPage': 'Select page',
             'pages': 'Pages',
@@ -84,7 +84,7 @@ export default {
             'prev': '上一页',
             'next': '下一页',
           },
-        };
+        });
       }
     },
     pageTransitionTime: {
@@ -112,7 +112,7 @@ export default {
     translateText: function() {
       const langcode = this.langcode;
       try{
-        var translation = JSON.parse(translation);
+        var translation = JSON.parse(this.translation);
       }catch(ex){
         var translation = this.translation;
       }

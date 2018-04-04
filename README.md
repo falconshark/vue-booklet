@@ -99,7 +99,7 @@ Current support language is English (en), Traditional Chinese (zh-hant) and Simp
 Default value is en.
 
 #### translation(optional)
-Define translation of booklet UI. Pass object with translated text.
+Define translation of booklet UI. You can pass object or JSON string with translated text to it.
 Default value:
 ```js
 {
