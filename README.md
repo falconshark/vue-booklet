@@ -67,8 +67,13 @@ After that, you can use vue-booklet on your project now.
 <script type="text/javascript" src="http://vuejs.org/js/vue.min.js"></script>
 <script type="text/javascript" src="vue-booklet.min.js"></script>
 <script>
+var VueBooklet = window.VueBooklet;
+
 new Vue({
   el: '#vue-booklet-container',
+  components: {
+    Book: VueBooklet,
+  }
 })
 </script>
 ```
