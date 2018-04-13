@@ -1,6 +1,6 @@
 {
   "name": "vue-booklet",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "Vue book-like compoment for create a your own e-book",
   "author": "Mr.Twister <sardo.ip@sardo.work>",
   "main": "dist/lib/vue-booklet.min.js",
