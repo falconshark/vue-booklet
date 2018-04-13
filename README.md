@@ -98,6 +98,26 @@ new Vue({
 
 ## Props
 
+#### displayPageNumber(optional)
+Default value is true. Will not show page number when it is false.
+
+#### enableControl(optional)
+Default value is true. Will not allow user control the book when it is false.
+If you want to control it, add ref to book compoment and call function like this:
+```js
+this.$refs.book.nextPage();
+this.$refs.book.prevPage();
+```
+
+
+#### displayButton(optional)
+Default value is true. Will not show nextPage and PrevPage button when it is false.
+Only work when the value of allowFlip is true.
+
+#### enableSelectPage(optional)
+Default value is true. Will not allow user select page when it is false.
+Only work when the value of allowFlip is true.
+
 #### langcode(optional)
 Set the language of booklet UI.
 Current support language is English (en), Traditional Chinese (zh-hant) and Simplified Chinese (zh-hans). You can add new langcode with translation props.

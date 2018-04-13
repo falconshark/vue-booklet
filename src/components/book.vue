@@ -1,6 +1,6 @@
 <template>
   <div class="vue-booklet">
-    <div class="select-page-wrapper-mobile">
+    <div class="select-page-wrapper-mobile" v-show="enableSelectPage && enableControl">
       <label for="select-page">{{translateText.selectPage}}: </label>
       <select id="select-page-mobile" v-on:change="selectPageMobile">
         <option v-for="pageNumber in totolPages" :value="pageNumber">
@@ -11,13 +11,21 @@
 
     <div class="book closed" ref="book">
       <div class="pages" ref="pages">
-        <div class="control-page control-page-left" v-on:click="prevPage"></div>
-        <div class="control-page control-page-right" v-on:click="nextPage"></div>
+        <div class="control-page control-page-left" v-show="enableControl" v-on:click="prevPage">
+          <div class="control-page-icon control-page-text-left">
+            <img class="img-responsive" src="../assets/arrow_left.png" />
+          </div>
+        </div>
+        <div class="control-page control-page-right" v-show="enableControl" v-on:click="nextPage">
+          <div class="control-page-icon control-page-text-right">
+            <img class="img-responsive" src="../assets/arrow_right.png" />
+          </div>
+        </div>
         <slot></slot>
       </div>
     </div>
 
-    <div class="select-page-wrapper">
+    <div class="select-page-wrapper" v-show="enableSelectPage && enableControl">
       <label for="select-page">{{translateText.selectPage}}: </label>
       <select id="select-page" v-on:change="selectPage">
         <option v-for="pageNumber in totolPages" :ref="'page' + pageNumber" :value="pageNumber">
@@ -26,10 +34,10 @@
       </select>
     </div>
 
-    <div class="page-number" v-if="currentPageNum !== 0">
+    <div class="page-number" v-show="displayPageNumber">
       {{translateText.pages}} : {{currentPageNum}} / {{totolPages}}
     </div>
-    <div class="book-control-buttons">
+    <div class="book-control-buttons" v-show="displayButton && enableControl">
       <button tabindex="0" class="book-control-button prev" v-show="!front"
       v-on:keyup.enter="prevPage" v-on:click="prevPage">
       {{translateText.prev}}
@@ -62,6 +70,22 @@ export default {
     langcode: {
       type: String,
       default: 'en',
+    },
+    displayPageNumber: {
+      type: Boolean,
+      default : true,
+    },
+    displayButton: {
+      type: Boolean,
+      default: true,
+    },
+    enableControl: {
+      type: Boolean,
+      default: true,
+    },
+    enableSelectPage: {
+      type: Boolean,
+      default : true,
     },
     translation: {
       default: () =>{

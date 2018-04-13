@@ -74,9 +74,22 @@
 
   .control-page{
     position: absolute;
+    display: flex;
+    align-items:center;
+    justify-content: center;
     width: 100px;
     height: 100%;
     z-index: 99;
+    transition: all .3s;
+    opacity: 0;
+    background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.0001) 100%);
+    background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.0001) 100%);
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.0001) 100%);
+    background-repeat: repeat-x;
+
+    &:hover{
+      opacity: 0.5;
+    }
   }
 
   .control-page-left{
