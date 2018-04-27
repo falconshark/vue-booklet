@@ -95,6 +95,23 @@ new Vue({
   </div>
 </Book>
 ```
+## Methods
+
+#### prevPage(), nextPage()
+Function for control the book without button.
+
+```js
+this.$refs.book.nextPage();
+this.$refs.book.prevPage();
+```
+
+#### movePage(pageNum)
+Function for allow user move to specify page.
+
+```js
+const pageNumber = '1';
+this.$refs.book.movePage(pageNumber);
+```
 
 ## Props
 

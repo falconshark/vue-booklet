@@ -340,8 +340,11 @@ export default {
     },
     selectPage(e){
       const selectedPageNum = e.target.value;
+      this.movePage(selectedPageNum);
+    },
+    movePage(index){
       const currentPage = document.getElementsByClassName('currentPage')[0];
-      var selectedPage = document.querySelector('[data-index="' + selectedPageNum + '"]');
+      var selectedPage = document.querySelector('[data-index="' + index + '"]');
 
       if(!selectedPage){
         selectedPage = document.getElementsByClassName('lastPage')[0];
