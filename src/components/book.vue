@@ -51,9 +51,6 @@
 </template>
 
 <script>
-import PerfectScrollbar from 'perfect-scrollbar';
-import 'perfect-scrollbar/css/perfect-scrollbar.css';
-
 export default {
   name: 'Book',
   data() {
@@ -146,7 +143,6 @@ export default {
   mounted() {
     const book = this.$refs.book;
     this.initPage();
-    this.initContent();
 
     // Book opened event
     this.$on('onOpened', (position) => {
@@ -251,14 +247,6 @@ export default {
       lastPage.classList.add('lastPage');
 
       this.totolPages = pages.length + 1;
-    },
-    initContent(){
-      const contents = document.getElementsByClassName('content');
-      for(let i = 0; i < contents.length; i++){
-        const content = contents[i];
-        const ps = new PerfectScrollbar(content);
-        this.scrollBar = ps;
-      }
     },
     nextPage() {
       const currentPage = document.getElementsByClassName('currentPage')[0];

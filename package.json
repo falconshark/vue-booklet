@@ -1,6 +1,6 @@
 {
   "name": "vue-booklet",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "Vue book-like compoment for create a your own e-book",
   "author": "Mr.Twister <sardo.ip@sardo.work>",
   "main": "dist/lib/vue-booklet.min.js",
@@ -16,7 +16,6 @@
     "build:docs": "node build/build.js"
   },
   "dependencies": {
-    "perfect-scrollbar": "^1.3.0",
     "vue": "^2.3.3"
   },
   "devDependencies": {
