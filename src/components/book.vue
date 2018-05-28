@@ -156,18 +156,56 @@ export default {
     // Book page fliped event
     this.$on('onFlipStart', (direction) => {
       const currentPage = document.getElementsByClassName('currentPage')[0];
-      const hiddenPages = this.getAllNextPage(currentPage);
-      hiddenPages.forEach((page) => {
-        if(!page.classList.contains('lastPage')){
-          page.style.zIndex = '-1';
+      const nextPages = this.getAllNextPage(currentPage);
+      const prevPages = this.getAllPrevPage(currentPage);
+
+      if(direction === 'prev'){
+        //Hidden page for performance(Not inculde first previous page)
+        prevPages.forEach((page, index) => {
+          if(page.previousElementSibling){
+            const prevPage = page.previousElementSibling;
+            if(!prevPage.classList.contains('lastPage') && !prevPage.classList.contains('control-page')){
+              page.previousElementSibling.style.display = 'none';
+              page.previousElementSibling.style.zIndex = '-1';
+            }else{
+              page.previousElementSibling.style.display = 'none';
+              page.previousElementSibling.style.zIndex = '-3';
+            }
+          }
+        });
+      }else{
+        prevPages.forEach((page, index) => {
+          if(page.previousElementSibling){
+            const prevPage = page.previousElementSibling;
+            //Will not hidden first and second previous page to make animation smooth
+            if(!prevPage.classList.contains('control-page')){
+              if(index !== 0){
+                prevPage.style.display = 'none';
+              }
+              if(!prevPage.classList.contains('lastPage')){
+                prevPage.style.zIndex = '-1';
+              }else{
+                prevPage.style.zIndex = '-3';
+              }
+            }
+          }
+        });
+      }
+
+      nextPages.forEach((page, index) => {
+        //Will not hidden next page of current page to make animation smooth
+        if(index !== 0){
+          if(!page.classList.contains('lastPage')){
+            page.style.display = 'none';
+            page.style.zIndex = '-1';
+          }else{
+            page.style.display = 'none';
+            page.style.zIndex = '-3';
+          }
         }else{
-          page.style.zIndex = '-3';
+          page.style.zIndex = '-1';
         }
       });
-
-      if(currentPage.classList.contains('firstPage') && currentPage.nextElementSibling){
-        currentPage.nextElementSibling.style.zIndex = '2';
-      }
 
       this.onFlipStart(currentPage, direction);
     });
@@ -176,10 +214,11 @@ export default {
       const currentPage = document.getElementsByClassName('currentPage')[0];
       const selecter = document.getElementById('select-page');
       const pageNumber = parseInt(currentPage.dataset.index);
-      this.currentPageNum = pageNumber;
 
       if(currentPage.classList.contains('lastPage') && currentPage.classList.contains('fliped')){
         this.currentPageNum = pageNumber + 1;
+      }else{
+        this.currentPageNum = pageNumber;
       }
 
       selecter.value = this.currentPageNum;
@@ -231,6 +270,7 @@ export default {
         const index = i + 1;
         const page = pages[i];
         page.style.zIndex = '-1';
+        page.style.display = 'none';
         page.style.transition = 'transform ' + pageTransitionTime + 's';
         page.dataset.index = index;
 
@@ -240,10 +280,14 @@ export default {
           page.classList.add('odd');
         }
       }
+      firstPage.style.display = 'block';
       firstPage.style.zIndex = '3';
+
       if(firstPage.nextElementSibling){
+        firstPage.nextElementSibling.style.display = 'block';
         firstPage.nextElementSibling.style.zIndex = '2';
       }
+
       lastPage.classList.add('lastPage');
 
       this.totolPages = pages.length + 1;
@@ -266,6 +310,11 @@ export default {
 
         currentPage.classList.add('fliped');
         this.$emit('onFlipStart', 'next');
+
+        //Display next page
+        if (nextPage) {
+          nextPage.style.display = 'block';
+        }
 
         setTimeout(() => {
           // If this page have next page, set it to current page
@@ -302,6 +351,10 @@ export default {
             prevPage.classList.add('currentPage');
           }
 
+          if(prevPage.previousElementSibling){
+            prevPage.previousElementSibling.style.display = 'block';
+          }
+
           //If current page is last page , book not opened and it is not filped, open the book
           if (currentPage.classList.contains('lastPage') && !currentPage.classList.contains('fliped') && !this.opened) {
             this.$emit('onOpened', 'back');
@@ -310,7 +363,6 @@ export default {
           //If previous page is first page and book not opened, close the book
           if (prevPage.classList.contains('firstPage') && !prevPage.classList.contains('fliped') && this.opened) {
             this.$emit('onClosed', 'front');
-            currentPage.style.zIndex = '2';
           }
 
         }else{
@@ -327,12 +379,18 @@ export default {
       }
     },
     selectPage(e){
+      const currentPageNum = this.currentPageNum;
       const selectedPageNum = e.target.value;
-      this.movePage(selectedPageNum);
+      if(parseInt(selectedPageNum) > currentPageNum){
+        this.movePage(selectedPageNum, 'next');
+      }else{
+        this.movePage(selectedPageNum, 'prev');
+      }
     },
-    movePage(index){
+    movePage(index, direction){
       const currentPage = document.getElementsByClassName('currentPage')[0];
       var selectedPage = document.querySelector('[data-index="' + index + '"]');
+      const timeOut = this.pageTransitionTime * 4 * 100;
 
       if(!selectedPage){
         selectedPage = document.getElementsByClassName('lastPage')[0];
@@ -340,7 +398,9 @@ export default {
         this.$emit('onClosed', 'back');
       }else{
         //Set selected page to current page and top
-        selectedPage.classList.remove('fliped');
+        setTimeout(() => {
+          selectedPage.classList.remove('fliped');
+        }, 100);
 
         //If book is closed, opened it
         if (!this.opened) {
@@ -353,31 +413,35 @@ export default {
 
       currentPage.classList.remove('currentPage');
       selectedPage.classList.add('currentPage');
+      selectedPage.style.display = 'block';
       selectedPage.style.zIndex = 3;
 
       if(selectedPage.classList.contains('firstPage') && selectedPage.nextElementSibling){
         this.$emit('onClosed', 'front');
-        selectedPage.nextElementSibling.style.zIndex = '2';
       }
 
       //Flip all of the previous page
-      prevPages.forEach(function(page){
-        page.classList.add('fliped');
-        page.style.zIndex = '1';
-      });
-
-      //Hidden all of the old page
-      nextPages.forEach((page) => {
-        page.classList.remove('fliped');
-        if(!page.classList.contains('lastPage')){
-          page.style.zIndex = '-1';
-        }else{
-          page.style.zIndex = '-3';
+      prevPages.forEach(function(page, index){
+        if(index === 0){
+          page.style.zIndex = '1';
         }
+        page.style.display = 'block';
+        setTimeout(() => {
+          page.classList.add('fliped');
+        }, 50);
       });
 
-      this.$emit('onFlipStart', 'front');
-      this.$emit('onFlipEnd', 'front');
+      //Hidden other pages
+      nextPages.forEach(function(page){
+        page.style.display = 'block';
+        page.classList.remove('fliped');
+      });
+
+      this.$emit('onFlipStart', direction);
+
+      setTimeout(() => {
+        this.$emit('onFlipEnd', direction);
+      }, timeOut);
     },
     selectPageMobile(e){
       const selectedPageNum = e.target.value;
@@ -404,6 +468,9 @@ export default {
       const pages = [];
       let nextPage = currentPage.nextElementSibling;
       while (nextPage) {
+        if(nextPage.classList.contains('control-page')){
+          break;
+        }
         pages.push(nextPage);
         nextPage = nextPage.nextElementSibling;
       }
