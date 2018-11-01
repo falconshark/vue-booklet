@@ -165,10 +165,10 @@ export default {
           if(page.previousElementSibling){
             const prevPage = page.previousElementSibling;
             if(!prevPage.classList.contains('lastPage') && !prevPage.classList.contains('control-page')){
-              page.previousElementSibling.style.display = 'none';
+              page.previousElementSibling.style.visibility = 'hidden';
               page.previousElementSibling.style.zIndex = '-1';
             }else{
-              page.previousElementSibling.style.display = 'none';
+              page.previousElementSibling.style.visibility = 'hidden';
               page.previousElementSibling.style.zIndex = '-3';
             }
           }
@@ -180,7 +180,7 @@ export default {
             //Will not hidden first and second previous page to make animation smooth
             if(!prevPage.classList.contains('control-page')){
               if(index !== 0){
-                prevPage.style.display = 'none';
+                prevPage.style.visibility = 'hidden';
               }
               if(!prevPage.classList.contains('lastPage')){
                 prevPage.style.zIndex = '-1';
@@ -196,10 +196,10 @@ export default {
         //Will not hidden next page of current page to make animation smooth
         if(index !== 0){
           if(!page.classList.contains('lastPage')){
-            page.style.display = 'none';
+            page.style.visibility = 'hidden';
             page.style.zIndex = '-1';
           }else{
-            page.style.display = 'none';
+            page.style.visibility = 'hidden';
             page.style.zIndex = '-3';
           }
         }else{
@@ -270,7 +270,7 @@ export default {
         const index = i + 1;
         const page = pages[i];
         page.style.zIndex = '-1';
-        page.style.display = 'none';
+        page.style.visibility = 'hidden';
         page.style.transition = 'transform ' + pageTransitionTime + 's';
         page.dataset.index = index;
 
@@ -280,11 +280,11 @@ export default {
           page.classList.add('odd');
         }
       }
-      firstPage.style.display = 'block';
+      firstPage.style.visibility = 'visible';
       firstPage.style.zIndex = '3';
 
       if(firstPage.nextElementSibling){
-        firstPage.nextElementSibling.style.display = 'block';
+        firstPage.nextElementSibling.style.visibility = 'visible';
         firstPage.nextElementSibling.style.zIndex = '2';
       }
 
@@ -313,7 +313,7 @@ export default {
 
         //Display next page
         if (nextPage) {
-          nextPage.style.display = 'block';
+          nextPage.style.visibility = 'visible';
         }
 
         setTimeout(() => {
@@ -352,7 +352,7 @@ export default {
           }
 
           if(prevPage.previousElementSibling){
-            prevPage.previousElementSibling.style.display = 'block';
+            prevPage.previousElementSibling.style.visibility = 'visible';
           }
 
           //If current page is last page , book not opened and it is not filped, open the book
