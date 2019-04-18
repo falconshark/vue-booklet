@@ -142,7 +142,38 @@ export default {
   },
   mounted() {
     const book = this.$refs.book;
-    this.initPage();
+    const pages = this.$refs.pages;
+    const initPage = this.initPage;
+    const selectPage = this.selectPage;
+    const selectPageMobile = this.selectPageMobile;
+    initPage();
+
+    //If added page to book, init page again
+    pages.addEventListener('DOMNodeInserted', function (e) {
+      initPage();
+    }, false);
+
+    //Detect screen size and make all page visible on mobile on start
+    if(window.innerWidth < 768){
+      const pages = document.getElementsByClassName('page');
+      for(let i = 0; i < pages.length; i++){
+        const page = pages[i];
+        page.style.visibility = 'visible';
+      }
+    }
+
+    //Detect screen size and make all page visible on mobile on resize
+    window.onresize = function(e){
+      if(window.innerWidth < 768){
+        const pages = document.getElementsByClassName('page');
+        for(let i = 0; i < pages.length; i++){
+          const page = pages[i];
+          page.style.visibility = 'visible';
+        }
+      }else{
+        selectPage();
+      }
+    }
 
     // Book opened event
     this.$on('onOpened', (position) => {
@@ -378,9 +409,9 @@ export default {
         }, timeOut);
       }
     },
-    selectPage(e){
+    selectPage(){
       const currentPageNum = this.currentPageNum;
-      const selectedPageNum = e.target.value;
+      const selectedPageNum = document.querySelector('#select-page').value;
       if(parseInt(selectedPageNum) > currentPageNum){
         this.movePage(selectedPageNum, 'next');
       }else{
@@ -413,7 +444,7 @@ export default {
 
       currentPage.classList.remove('currentPage');
       selectedPage.classList.add('currentPage');
-      selectedPage.style.display = 'block';
+      selectedPage.style.visibility = 'visible';
       selectedPage.style.zIndex = 3;
 
       if(selectedPage.classList.contains('firstPage') && selectedPage.nextElementSibling){
@@ -425,7 +456,7 @@ export default {
         if(index === 0){
           page.style.zIndex = '1';
         }
-        page.style.display = 'block';
+        page.style.visibility = 'visible';
         setTimeout(() => {
           page.classList.add('fliped');
         }, 50);
@@ -433,7 +464,7 @@ export default {
 
       //Hidden other pages
       nextPages.forEach(function(page){
-        page.style.display = 'block';
+        page.style.visibility = 'visible';
         page.classList.remove('fliped');
       });
 
@@ -443,8 +474,8 @@ export default {
         this.$emit('onFlipEnd', direction);
       }, timeOut);
     },
-    selectPageMobile(e){
-      const selectedPageNum = e.target.value;
+    selectPageMobile(){
+      const selectedPageNum = document.querySelector('#select-page-mobile').value;
       const lastPageNum = parseInt(selectedPageNum) - 1;
       var selectedPage = document.querySelector('[data-index="' + selectedPageNum + '"]');
       if(!selectedPage){

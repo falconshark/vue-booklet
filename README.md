@@ -95,6 +95,16 @@ new Vue({
   </div>
 </Book>
 ```
+If you want to add page to book programmatically, here are one more example:
+
+```js
+const newPage = document.createElement('div');
+const newContent = document.createElement('div');
+newPage.className = 'page';
+newContent.className= 'content';
+newPage.appendChild(newContent);
+pages.appendChild(newPage);
+```
 ## Methods
 
 #### prevPage(), nextPage()
