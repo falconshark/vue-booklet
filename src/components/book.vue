@@ -149,12 +149,6 @@ export default {
     const currentPageNum = this.currentPageNum;
     initPage();
 
-    //If added page to book, init page again
-    pages.addEventListener('DOMNodeInserted', function (e) {
-      initPage();
-      selectPage(currentPageNum);
-    }, false);
-
     //Detect screen size and make all page visible on mobile on start
     if(window.innerWidth < 768){
       const pages = document.getElementsByClassName('page');
