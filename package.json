@@ -16,7 +16,7 @@
     "build:docs": "node build/build.js"
   },
   "dependencies": {
-    "js-yaml": "^3.14.1",
+    "js-yaml": "^3.13.1",
     "serialize-javascript": "^5.0.1",
     "vue": "^2.3.3",
     "yargs-parser": "^5.0.0-security.0"
