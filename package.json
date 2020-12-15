@@ -19,7 +19,7 @@
     "js-yaml": "^3.14.1",
     "serialize-javascript": "^5.0.1",
     "vue": "^2.3.3",
-    "yargs-parser": "^20.2.4"
+    "yargs-parser": "^5.0.0-security.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
